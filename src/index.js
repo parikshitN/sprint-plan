@@ -23,25 +23,26 @@ class Assignment {
 class Plan extends React.Component {
 	constructor(props){
 		super(props);
-		this.state={assignments : props.assignnmment};
+		
+		//assignments.push(new Assignment("do task 1", "parikshit", "14/11/2018",3));
+		//assignments.push(new Assignment("do task 2", "pooja", "14/11/2018",2));	
+		//this.state={assignments : [new Assignment("do task 1", "parikshit", "14/11/2018",3),
+		//new Assignment("do task 2", "pooja", "14/11/2018",2)]};
+		this.state = {assignments : []};
 	}
 	
-	renderAssignmentsRows(){
-		var rows = [];
-		var assignments = this.state.assignments;
-		for(let assignment in assignments){
-			rows.push(<Row><Col>{assignment.name}</Col></Row>);
-		}
-		return rows;
+	componentDidMount(){
+		const assignments = [new Assignment("do task 1", "parikshit", "14/11/2018",3),new Assignment("do task 2", "pooja", "14/11/2018",2)];
+		this.setState({assignments});
+	}
+	
+	renderAssignmentRows(){
+		return this.state.assignments.map(assignment => <Row><Col>{assignment.name}</Col></Row>);
 	}
 
 	render(){
-		return (<Container className="fluid"> {this.rederAssignmentRows()} </Container>);
+		return (<Container className="fluid"> {this.renderAssignmentRows()} </Container>);
 	}
 }
 
-ReactDOM.render(() => {
-	var assignments = [];
-	assignments.push(new Assignment("do task 1", "parikshit", "14/11/2018",3));
-	assignments.push(new Assignment("do task 2", "pooja", "14/11/2018",2));
-	return (<Plan assignments = {assignments}/>);}, document.getElementById('root'));
+ReactDOM.render(<Plan />, document.getElementById('root'));
